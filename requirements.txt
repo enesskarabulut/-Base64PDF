@@ -1,0 +1,2 @@
+# tkinter Python ile birlikte gelir, ayrıca kurulmasına gerek yok
+# Gerekli paketler 

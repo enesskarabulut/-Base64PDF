@@ -1,0 +1,16 @@
+{
+  "name": "base64pdf",
+  "version": "1.0.0",
+  "description": "Base64 formatındaki verileri PDF'e dönüştüren web uygulaması",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve",
+    "dev": "serve",
+    "build": "echo 'No build required'"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+} 
