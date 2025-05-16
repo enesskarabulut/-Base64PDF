@@ -602,7 +602,31 @@
     </div>
   </footer>
 
+  <!-- Yükleme sırasını düzeltelim ve herhangi bir hata ayıklama bilgisi ekleyelim -->
+  <script>
+    // Script yükleme debugging
+    console.log('index.html: Scriptler yükleniyor...');
+    
+    // Hata yakalama
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error('Sayfa hatası:', { message, source, lineno, colno });
+      return false;
+    };
+  </script>
   <script src="js/translations.js"></script>
+  <script>
+    // translations.js yüklendi mi kontrol et
+    console.log('translations.js yüklendi mi:', typeof translations !== 'undefined');
+    if (typeof translations === 'undefined') {
+      console.error('Kritik hata: translations objesi bulunamadı!');
+    }
+  </script>
   <script src="js/main.js"></script>
+  <script>
+    // Sayfa yüklendikten sonra son kontrol
+    window.addEventListener('DOMContentLoaded', function() {
+      console.log('Tüm scriptler yüklendi, sayfa hazır');
+    });
+  </script>
 </body>
 </html>

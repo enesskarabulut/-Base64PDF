@@ -1,3 +1,6 @@
+// translations.js - Hata ayıklama için bilgi
+console.log('translations.js dosyası yükleniyor...');
+
 // Çeviriler
 const translations = {
   // Türkçe çeviriler (varsayılan)

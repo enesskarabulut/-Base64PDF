@@ -24,6 +24,12 @@ const pdfContainer = document.getElementById('pdfContainer');
 const themeSwitch = document.getElementById('themeSwitch');
 const languageSelector = document.getElementById('languageSelector');
 
+// Hata ayıklama - DOM elemanlarını kontrol et
+console.log('DOM Elemanları yükleniyor...');
+console.log('dragArea:', dragArea);
+console.log('languageSelector:', languageSelector);
+console.log('translations yüklendi mi:', typeof translations !== 'undefined');
+
 // Global değişkenler
 let currentPdfBlob = null;
 let currentPdfFilename = 'document.pdf';
@@ -62,6 +68,15 @@ themeSwitch.addEventListener('click', () => {
 
 // Sayfa yüklendiğinde tema tercihi kontrolü
 window.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded tetiklendi');
+  // Translations objesi kontrol ediliyor
+  if (typeof translations === 'undefined') {
+    console.error('translations objesi bulunamadı! translations.js dosyası yüklenmemiş olabilir.');
+  } else {
+    console.log('translations objesi bulundu:', Object.keys(translations));
+  }
+  
+  // Tema tercihi kontrolü
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -69,6 +84,22 @@ window.addEventListener('DOMContentLoaded', () => {
     if (savedTheme === 'dark') {
       themeSwitch.querySelector('i').className = 'fas fa-sun';
     }
+  }
+  
+  try {
+    // Varsayılan dili belirle
+    const userLang = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
+    console.log('Tarayıcı dili:', navigator.language);
+    console.log('Kullanılacak dil:', userLang);
+    currentLanguage = userLang;
+    
+    // Dil seçiciyi güncelle
+    if (languageSelector) {
+      languageSelector.value = Object.keys(translations).includes(userLang) ? userLang : 'en';
+      console.log('Dil seçici güncellendi:', languageSelector.value);
+    }
+  } catch (error) {
+    console.error('Dil ayarları yapılırken hata:', error);
   }
 });
 
@@ -332,7 +363,28 @@ function getTranslation(key) {
 
 // Sayfa yüklendiğinde hoş geldin mesajı
 window.addEventListener('load', () => {
+  console.log('Sayfa tam olarak yüklendi (load event)');
+
+  // applyLanguage fonksiyonunu çağır (varsa)
+  if (typeof applyLanguage === 'function') {
+    try {
+      console.log('applyLanguage fonksiyonu çağrılıyor...');
+      applyLanguage(currentLanguage);
+      console.log('Dil uygulandı:', currentLanguage);
+    } catch (error) {
+      console.error('applyLanguage fonksiyonu çalıştırılırken hata:', error);
+    }
+  } else {
+    console.error('applyLanguage fonksiyonu bulunamadı!');
+  }
+
   setTimeout(() => {
-    showAssistantMessage(getTranslation('welcomeMessage'));
+    try {
+      const welcomeMsg = getTranslation('welcomeMessage');
+      console.log('Hoş geldin mesajı:', welcomeMsg);
+      showAssistantMessage(welcomeMsg);
+    } catch (error) {
+      console.error('Hoş geldin mesajı gösterilirken hata:', error);
+    }
   }, 1000);
 }); 
