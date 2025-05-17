@@ -33,7 +33,25 @@ const translations = {
     invalidPdfError: 'Geçersiz PDF formatı! Base64 verisinin gerçekten bir PDF dosyasını temsil ettiğinden emin olun.',
     base64Error: 'Base64 çözümleme hatası! Lütfen geçerli bir Base64 verisi girdiğinizden emin olun.',
     decodingError: 'Bir hata oluştu. Girdiğiniz veri geçerli bir Base64 formatında olmayabilir. Lütfen veriyi kontrol edip tekrar deneyin.',
-    languageSelector: 'Dil Seçin'
+    languageSelector: 'Dil Seçin',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'PDF Dosyanızı Buraya Sürükleyin',
+    pdfDropDescription: 'veya dosya seçmek için butona tıklayın',
+    pdfBrowseButton: 'PDF Dosyası Seç',
+    convertToBase64Button: 'Base64\'e Dönüştür',
+    base64ResultTitle: 'Base64 Çıktısı',
+    copyButton: 'Kopyala',
+    clearButton: 'Temizle',
+    copySuccess: 'Kopyalandı!',
+    copyError: 'Kopyalanırken bir hata oluştu. Manuel olarak kopyalamanız gerekebilir.',
+    pdfFileLoaded: 'PDF dosyası yüklendi: {filename} ({filesize} KB). "Base64\'e Dönüştür" butonuna tıklayın.',
+    base64ConvertSuccess: 'PDF, Base64 koduna dönüştürüldü!',
+    base64CopiedMessage: 'Base64 metni panoya kopyalandı!',
+    selectPdfWarning: 'Lütfen önce bir PDF dosyası seçin.',
+    invalidFileError: 'Lütfen geçerli bir PDF dosyası seçin.'
   },
   
   // İngilizce çeviriler
@@ -66,7 +84,25 @@ const translations = {
     invalidPdfError: 'Invalid PDF format! Make sure the Base64 data actually represents a PDF file.',
     base64Error: 'Base64 parsing error! Please ensure you\'ve entered valid Base64 data.',
     decodingError: 'An error occurred. The data you entered may not be in valid Base64 format. Please check the data and try again.',
-    languageSelector: 'Select Language'
+    languageSelector: 'Select Language',
+    
+    // PDF to Base64 translations
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'Drop Your PDF File Here',
+    pdfDropDescription: 'or click the button to select file',
+    pdfBrowseButton: 'Browse PDF File',
+    convertToBase64Button: 'Convert to Base64',
+    base64ResultTitle: 'Base64 Output',
+    copyButton: 'Copy',
+    clearButton: 'Clear',
+    copySuccess: 'Copied!',
+    copyError: 'Failed to copy. Please copy manually.',
+    pdfFileLoaded: 'PDF file loaded: {filename} ({filesize} KB). Click "Convert to Base64" button.',
+    base64ConvertSuccess: 'PDF successfully converted to Base64!',
+    base64CopiedMessage: 'Base64 text copied to clipboard!',
+    selectPdfWarning: 'Please select a PDF file first.',
+    invalidFileError: 'Please select a valid PDF file.'
   },
   
   // İspanyolca çeviriler
@@ -99,7 +135,25 @@ const translations = {
     invalidPdfError: '¡Formato PDF inválido! Asegúrese de que los datos Base64 realmente representan un archivo PDF.',
     base64Error: '¡Error de análisis Base64! Por favor, asegúrese de haber introducido datos Base64 válidos.',
     decodingError: 'Ha ocurrido un error. Es posible que los datos que introdujo no estén en formato Base64 válido. Compruebe los datos e inténtelo de nuevo.',
-    languageSelector: 'Seleccionar Idioma'
+    languageSelector: 'Seleccionar Idioma',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'Arrastre su archivo PDF aquí',
+    pdfDropDescription: 'o haga clic en el botón para seleccionar el archivo',
+    pdfBrowseButton: 'Buscar archivo PDF',
+    convertToBase64Button: 'Convertir a Base64',
+    base64ResultTitle: 'Salida Base64',
+    copyButton: 'Copiar',
+    clearButton: 'Limpiar',
+    copySuccess: '¡Copiado!',
+    copyError: 'Error al copiar. Por favor, copie manualmente.',
+    base64CopiedMessage: '¡Texto Base64 copiado al portapapeles!',
+    pdfFileLoaded: 'Archivo PDF cargado: {filename} ({filesize} KB). Haga clic en el botón "Convertir a Base64".',
+    base64ConvertSuccess: '¡PDF convertido exitosamente a Base64!',
+    selectPdfWarning: 'Por favor, seleccione un archivo PDF primero.',
+    invalidFileError: 'Por favor, seleccione un archivo PDF válido.'
   },
   
   // Fransızca çeviriler
@@ -132,7 +186,25 @@ const translations = {
     invalidPdfError: 'Format PDF invalide ! Assurez-vous que les données Base64 représentent bien un fichier PDF.',
     base64Error: 'Erreur d\'analyse Base64 ! Veuillez vous assurer d\'avoir entré des données Base64 valides.',
     decodingError: 'Une erreur s\'est produite. Les données que vous avez entrées ne sont peut-être pas au format Base64 valide. Veuillez vérifier les données et réessayer.',
-    languageSelector: 'Sélectionner la Langue'
+    languageSelector: 'Sélectionner la Langue',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'Déposez votre fichier PDF ici',
+    pdfDropDescription: 'ou cliquez sur le bouton pour sélectionner un fichier',
+    pdfBrowseButton: 'Parcourir fichier PDF',
+    convertToBase64Button: 'Convertir en Base64',
+    base64ResultTitle: 'Résultat Base64',
+    copyButton: 'Copier',
+    clearButton: 'Effacer',
+    copySuccess: 'Copié !',
+    copyError: 'Échec de la copie. Veuillez copier manuellement.',
+    base64CopiedMessage: 'Texte Base64 copié dans le presse-papiers !',
+    pdfFileLoaded: 'Fichier PDF chargé : {filename} ({filesize} KB). Cliquez sur le bouton "Convertir en Base64".',
+    base64ConvertSuccess: 'PDF converti avec succès en Base64 !',
+    selectPdfWarning: 'Veuillez d\'abord sélectionner un fichier PDF.',
+    invalidFileError: 'Veuillez sélectionner un fichier PDF valide.'
   },
   
   // Almanca çeviriler
@@ -165,7 +237,25 @@ const translations = {
     invalidPdfError: 'Ungültiges PDF-Format! Stellen Sie sicher, dass die Base64-Daten tatsächlich eine PDF-Datei darstellen.',
     base64Error: 'Base64-Parsing-Fehler! Bitte stellen Sie sicher, dass Sie gültige Base64-Daten eingegeben haben.',
     decodingError: 'Ein Fehler ist aufgetreten. Die eingegebenen Daten sind möglicherweise nicht im gültigen Base64-Format. Bitte überprüfen Sie die Daten und versuchen Sie es erneut.',
-    languageSelector: 'Sprache auswählen'
+    languageSelector: 'Sprache auswählen',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'PDF-Datei hier ablegen',
+    pdfDropDescription: 'oder klicken Sie auf die Schaltfläche, um eine Datei auszuwählen',
+    pdfBrowseButton: 'PDF-Datei durchsuchen',
+    convertToBase64Button: 'In Base64 konvertieren',
+    base64ResultTitle: 'Base64-Ausgabe',
+    copyButton: 'Kopieren',
+    clearButton: 'Löschen',
+    copySuccess: 'Kopiert!',
+    copyError: 'Fehler beim Kopieren. Bitte manuell kopieren.',
+    base64CopiedMessage: 'Base64-Text in die Zwischenablage kopiert!',
+    pdfFileLoaded: 'PDF-Datei geladen: {filename} ({filesize} KB). Klicken Sie auf die Schaltfläche "In Base64 konvertieren".',
+    base64ConvertSuccess: 'PDF erfolgreich in Base64 konvertiert!',
+    selectPdfWarning: 'Bitte wählen Sie zuerst eine PDF-Datei aus.',
+    invalidFileError: 'Bitte wählen Sie eine gültige PDF-Datei aus.'
   },
   
   // İtalyanca çeviriler
@@ -198,7 +288,25 @@ const translations = {
     invalidPdfError: 'Formato PDF non valido! Assicurati che i dati Base64 rappresentino effettivamente un file PDF.',
     base64Error: 'Errore di analisi Base64! Assicurati di aver inserito dati Base64 validi.',
     decodingError: 'Si è verificato un errore. I dati inseriti potrebbero non essere in un formato Base64 valido. Controlla i dati e riprova.',
-    languageSelector: 'Seleziona Lingua'
+    languageSelector: 'Seleziona Lingua',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'Trascina qui il tuo file PDF',
+    pdfDropDescription: 'o clicca sul pulsante per selezionare il file',
+    pdfBrowseButton: 'Sfoglia file PDF',
+    convertToBase64Button: 'Converti in Base64',
+    base64ResultTitle: 'Uscita Base64',
+    copyButton: 'Copia',
+    clearButton: 'Cancella',
+    copySuccess: 'Copiato!',
+    copyError: 'Errore di copia. Incolla manualmente.',
+    base64CopiedMessage: 'Testo Base64 copiato negli appunti!',
+    pdfFileLoaded: 'File PDF caricato: {filename} ({filesize} KB). Clicca sul bottone "Converti in Base64".',
+    base64ConvertSuccess: 'PDF convertito correttamente in Base64!',
+    selectPdfWarning: 'Per favore seleziona prima un file PDF.',
+    invalidFileError: 'Per favore seleziona un file PDF valido.'
   },
   
   // Portekizce çeviriler
@@ -231,7 +339,25 @@ const translations = {
     invalidPdfError: 'Formato PDF inválido! Certifique-se de que os dados Base64 realmente representam um arquivo PDF.',
     base64Error: 'Erro de análise Base64! Certifique-se de ter inserido dados Base64 válidos.',
     decodingError: 'Ocorreu um erro. Os dados inseridos podem não estar em formato Base64 válido. Verifique os dados e tente novamente.',
-    languageSelector: 'Selecionar Idioma'
+    languageSelector: 'Selecionar Idioma',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'Solte seu arquivo PDF aqui',
+    pdfDropDescription: 'ou clique no botão para selecionar o arquivo',
+    pdfBrowseButton: 'Procurar arquivo PDF',
+    convertToBase64Button: 'Converter para Base64',
+    base64ResultTitle: 'Saída Base64',
+    copyButton: 'Copiar',
+    clearButton: 'Limpar',
+    copySuccess: 'Copiado!',
+    copyError: 'Erro ao copiar. Por favor, cole manualmente.',
+    base64CopiedMessage: 'Texto Base64 copiado para a área de transferência!',
+    pdfFileLoaded: 'Arquivo PDF carregado: {filename} ({filesize} KB). Clique no botão "Converter para Base64".',
+    base64ConvertSuccess: 'PDF convertido com sucesso para Base64!',
+    selectPdfWarning: 'Por favor, selecione um arquivo PDF primeiro.',
+    invalidFileError: 'Por favor, selecione um arquivo PDF válido.'
   },
   
   // Japonca çeviriler
@@ -264,7 +390,25 @@ const translations = {
     invalidPdfError: '無効なPDF形式です！Base64データが実際にPDFファイルを表していることを確認してください。',
     base64Error: 'Base64解析エラー！有効なBase64データを入力したことを確認してください。',
     decodingError: 'エラーが発生しました。入力したデータは有効なBase64形式ではない可能性があります。データを確認して再試行してください。',
-    languageSelector: '言語を選択'
+    languageSelector: '言語を選択',
+    
+    // PDF to Base64 çevirileri
+    base64ToPdfMode: 'Base64 → PDF',
+    pdfToBase64Mode: 'PDF → Base64',
+    pdfDropText: 'ここにPDFファイルをドロップ',
+    pdfDropDescription: 'またはボタンをクリックしてファイルを選択',
+    pdfBrowseButton: 'PDFファイルを参照',
+    convertToBase64Button: 'Base64に変換',
+    base64ResultTitle: 'Base64出力',
+    copyButton: 'コピー',
+    clearButton: 'クリア',
+    copySuccess: 'コピーしました！',
+    copyError: 'コピーに失敗しました。手動でコピーしてください。',
+    base64CopiedMessage: 'Base64テキストをクリップボードにコピーしました！',
+    pdfFileLoaded: 'PDFファイルが正常に読み込まれました: {filename} ({filesize} KB). "Base64に変換"ボタンをクリックしてください。',
+    base64ConvertSuccess: 'PDFが正常にBase64に変換されました！',
+    selectPdfWarning: 'まずPDFファイルを選択してください。',
+    invalidFileError: '有効なPDFファイルを選択してください。'
   }
 };
 

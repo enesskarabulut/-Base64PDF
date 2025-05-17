@@ -24,6 +24,21 @@ const pdfContainer = document.getElementById('pdfContainer');
 const themeSwitch = document.getElementById('themeSwitch');
 const languageSelector = document.getElementById('languageSelector');
 
+// PDF -> Base64 için DOM elementleri
+const pdfDragArea = document.getElementById('pdfDragArea');
+const pdfFileInput = document.getElementById('pdfFileInput');
+const pdfBrowseBtn = document.getElementById('pdfBrowseBtn');
+const convertToBase64Btn = document.getElementById('convertToBase64Btn');
+const base64Result = document.getElementById('base64Result');
+const base64Output = document.getElementById('base64Output');
+const copyBase64Btn = document.getElementById('copyBase64Btn');
+
+// Mod değiştirme düğmeleri
+const base64ToPdfBtn = document.getElementById('base64ToPdfBtn');
+const pdfToBase64Btn = document.getElementById('pdfToBase64Btn');
+const base64ToPdfMode = document.getElementById('base64ToPdfMode');
+const pdfToBase64Mode = document.getElementById('pdfToBase64Mode');
+
 // Hata ayıklama - DOM elemanlarını kontrol et
 console.log('DOM Elemanları yükleniyor...');
 console.log('dragArea:', dragArea);
@@ -34,6 +49,27 @@ console.log('translations yüklendi mi:', typeof translations !== 'undefined');
 let currentPdfBlob = null;
 let currentPdfFilename = 'document.pdf';
 let currentLanguage = 'tr'; // Varsayılan dil
+
+// Modlar arası geçiş
+base64ToPdfBtn.addEventListener('click', () => {
+  base64ToPdfBtn.classList.add('active');
+  pdfToBase64Btn.classList.remove('active');
+  base64ToPdfMode.classList.add('active');
+  pdfToBase64Mode.classList.remove('active');
+  
+  // Önceki hata mesajlarını temizle
+  hideAllStatuses();
+});
+
+pdfToBase64Btn.addEventListener('click', () => {
+  pdfToBase64Btn.classList.add('active');
+  base64ToPdfBtn.classList.remove('active');
+  pdfToBase64Mode.classList.add('active');
+  base64ToPdfMode.classList.remove('active');
+  
+  // Önceki hata mesajlarını temizle
+  hideAllStatuses();
+});
 
 // Dil değiştirme olay dinleyicisi
 languageSelector.addEventListener('change', (e) => {
@@ -387,4 +423,161 @@ window.addEventListener('load', () => {
       console.error('Hoş geldin mesajı gösterilirken hata:', error);
     }
   }, 1000);
-}); 
+});
+
+// PDF -> Base64 için sürükle-bırak işlemler
+['dragover', 'dragenter'].forEach(event => {
+  pdfDragArea.addEventListener(event, (e) => {
+    e.preventDefault();
+    pdfDragArea.classList.add('active');
+  });
+});
+
+['dragleave', 'dragend'].forEach(event => {
+  pdfDragArea.addEventListener(event, () => {
+    pdfDragArea.classList.remove('active');
+  });
+});
+
+pdfDragArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  pdfDragArea.classList.remove('active');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type === 'application/pdf') {
+    handlePdfFile(file);
+  } else {
+    showError(getTranslation('invalidFileError'));
+  }
+});
+
+// PDF dosyası seçme
+pdfBrowseBtn.addEventListener('click', () => pdfFileInput.click());
+pdfFileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file && file.type === 'application/pdf') {
+    handlePdfFile(file);
+  } else {
+    showError(getTranslation('invalidFileError'));
+  }
+});
+
+// PDF'i Base64'e dönüştürme butonu
+convertToBase64Btn.addEventListener('click', () => {
+  if (!currentPdfFile) {
+    showWarning(getTranslation('selectPdfWarning'));
+    return;
+  }
+  
+  convertPdfToBase64(currentPdfFile);
+});
+
+// Seçilen PDF dosyasını saklayacak değişken
+let currentPdfFile = null;
+
+// PDF dosyasını işleme
+function handlePdfFile(file) {
+  currentPdfFile = file;
+  showProgress(0);
+  
+  // Dosya bilgilerini göster
+  showAssistantMessage(getTranslation('pdfFileLoaded')
+    .replace('{filename}', file.name)
+    .replace('{filesize}', (file.size / 1024).toFixed(2)));
+  
+  // İlerleme çubuğunu %100 yap ve sonra gizle
+  updateProgress(100);
+  setTimeout(() => {
+    hideProgress();
+  }, 500);
+}
+
+// PDF'i Base64'e dönüştürme
+function convertPdfToBase64(file) {
+  if (!file) return;
+  
+  showProgress(0);
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += 5;
+    if (progress > 70) clearInterval(interval);
+    updateProgress(progress);
+  }, 50);
+  
+  const reader = new FileReader();
+  
+  reader.onload = (e) => {
+    clearInterval(interval);
+    updateProgress(100);
+    
+    setTimeout(() => {
+      hideProgress();
+      
+      // Binary veriden Base64'e dönüştür
+      const arrayBuffer = e.target.result;
+      const bytes = new Uint8Array(arrayBuffer);
+      let binary = '';
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      const base64String = btoa(binary);
+      
+      // Base64 sonucunu göster
+      displayBase64Result(base64String);
+      
+      showSuccess(getTranslation('base64ConvertSuccess'));
+    }, 500);
+  };
+  
+  reader.onerror = () => {
+    clearInterval(interval);
+    hideProgress();
+    showError(getTranslation('fileError'));
+  };
+  
+  reader.readAsArrayBuffer(file);
+}
+
+// Base64 sonucunu göster
+function displayBase64Result(base64String) {
+  base64Output.textContent = base64String;
+  
+  // Add clear button if not already added
+  const existingClearBtn = document.querySelector('.base64-output .fa-eraser');
+  if (!existingClearBtn) {
+    document.querySelector('.base64-output').appendChild(clearBase64Btn);
+  }
+  
+  base64Result.style.display = 'block';
+  
+  // Sonuç bölgesine kaydır
+  base64Result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Copy Base64 button functionality
+copyBase64Btn.addEventListener('click', () => {
+  const base64Text = base64Output.textContent;
+  if (!base64Text) return;
+  
+  navigator.clipboard.writeText(base64Text)
+    .then(() => {
+      // Kopyalama başarılı mesajı
+      showSuccess(getTranslation('copySuccess'));
+      showAssistantMessage(getTranslation('base64CopiedMessage'));
+    })
+    .catch(err => {
+      showError(getTranslation('copyError'));
+    });
+});
+
+// Clear Base64 Result button
+const clearBase64Btn = document.createElement('button');
+clearBase64Btn.innerHTML = '<i class="fas fa-eraser"></i>';
+clearBase64Btn.className = 'copy-btn';
+clearBase64Btn.title = getTranslation('clearButton');
+clearBase64Btn.style.right = '80px';
+
+clearBase64Btn.addEventListener('click', () => {
+  base64Output.textContent = '';
+  base64Result.style.display = 'none';
+  hideAllStatuses();
+});

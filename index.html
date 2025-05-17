@@ -150,12 +150,20 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .drag-area:hover {
+      background-color: rgba(67, 97, 238, 0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
     }
     
     .drag-area.active {
       border-color: var(--success);
       background-color: rgba(76, 201, 240, 0.1);
       transform: scale(1.01);
+      box-shadow: 0 0 20px rgba(76, 201, 240, 0.3);
     }
     
     .drag-area i.fa-cloud-upload-alt {
@@ -483,6 +491,103 @@
     .drag-area i.fa-cloud-upload-alt {
       animation: float 3s ease-in-out infinite;
     }
+    
+    /* PDF to Base64 sade ikon */
+    .icon-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .single-icon {
+      color: #4361ee;
+      font-size: 64px;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Mode switcher styles */
+    .mode-switcher {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    
+    .mode-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--primary-light);
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+    
+    .mode-btn i {
+      font-size: 1.1rem;
+    }
+    
+    .mode-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+    }
+    
+    /* Content modes */
+    .content-mode {
+      display: none;
+    }
+    
+    .content-mode.active {
+      display: block;
+    }
+    
+    /* Base64 output container */
+    .base64-result {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .copy-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: var(--primary-light);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    
+    .copy-btn:hover {
+      background: var(--primary);
+    }
+    
+    .base64-output {
+      position: relative;
+      margin-top: 10px;
+    }
+    
+    .base64-output pre {
+      background: var(--light);
+      color: var(--dark);
+      padding: 15px;
+      border-radius: var(--radius);
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
@@ -518,42 +623,89 @@
           <h2 data-i18n="converterTitle">Base64'ten PDF'e Dönüştürücü</h2>
         </div>
         
-        <div class="drag-area" id="dragArea">
-          <i class="fas fa-cloud-upload-alt"></i>
-          <h3 data-i18n="dropText">Dosyanızı Buraya Sürükleyin</h3>
-          <p data-i18n="dropDescription">veya dosya seçmek için butona tıklayın</p>
-          <button class="btn btn-primary" id="browseBtn">
-            <i class="fas fa-folder-open"></i>
-            <span data-i18n="browseButton">Dosya Seç</span>
+        <div class="mode-switcher">
+          <button class="mode-btn active" id="base64ToPdfBtn" data-mode="base64-to-pdf">
+            <i class="fas fa-file-pdf"></i>
+            <span data-i18n="base64ToPdfMode">Base64 → PDF</span>
           </button>
-          <input type="file" id="fileInput" accept=".txt,.b64,.base64,text/plain">
+          <button class="mode-btn" id="pdfToBase64Btn" data-mode="pdf-to-base64">
+            <i class="fas fa-code"></i>
+            <span data-i18n="pdfToBase64Mode">PDF → Base64</span>
+          </button>
         </div>
         
-        <div class="or-divider">
-          <span data-i18n="orText">VEYA</span>
-        </div>
-        
-        <div class="textarea-container">
-          <textarea id="base64Input" data-i18n="textareaPlaceholder" placeholder="Base64 verinizi buraya yapıştırın..."></textarea>
-          <div class="textarea-actions">
-            <button id="clearBtn" title="Temizle">
-              <i class="fas fa-eraser"></i>
+        <!-- Base64 to PDF Mode -->
+        <div class="content-mode active" id="base64ToPdfMode">
+          <div class="drag-area" id="dragArea">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h3 data-i18n="dropText">Dosyanızı Buraya Sürükleyin</h3>
+            <p data-i18n="dropDescription">veya dosya seçmek için butona tıklayın</p>
+            <button class="btn btn-primary" id="browseBtn">
+              <i class="fas fa-folder-open"></i>
+              <span data-i18n="browseButton">Dosya Seç</span>
             </button>
-            <button id="pasteBtn" title="Panodan Yapıştır">
-              <i class="fas fa-paste"></i>
+            <input type="file" id="fileInput" accept=".txt,.b64,.base64,text/plain">
+          </div>
+          
+          <div class="or-divider">
+            <span data-i18n="orText">VEYA</span>
+          </div>
+          
+          <div class="textarea-container">
+            <textarea id="base64Input" data-i18n="textareaPlaceholder" placeholder="Base64 verinizi buraya yapıştırın..."></textarea>
+            <div class="textarea-actions">
+              <button id="clearBtn" title="Temizle">
+                <i class="fas fa-eraser"></i>
+              </button>
+              <button id="pasteBtn" title="Panodan Yapıştır">
+                <i class="fas fa-paste"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="btn-group">
+            <button class="btn btn-primary" id="convertBtn">
+              <i class="fas fa-play"></i>
+              <span data-i18n="convertButton">PDF'e Dönüştür ve Aç</span>
+            </button>
+            <button class="btn btn-outline" id="saveBtn">
+              <i class="fas fa-download"></i>
+              <span data-i18n="saveButton">PDF Olarak Kaydet</span>
             </button>
           </div>
         </div>
         
-        <div class="btn-group">
-          <button class="btn btn-primary" id="convertBtn">
-            <i class="fas fa-play"></i>
-            <span data-i18n="convertButton">PDF'e Dönüştür ve Aç</span>
-          </button>
-          <button class="btn btn-outline" id="saveBtn">
-            <i class="fas fa-download"></i>
-            <span data-i18n="saveButton">PDF Olarak Kaydet</span>
-          </button>
+        <!-- PDF to Base64 Mode -->
+        <div class="content-mode" id="pdfToBase64Mode">
+          <div class="drag-area" id="pdfDragArea">
+            <div class="icon-container">
+              <i class="fas fa-file-export single-icon"></i>
+            </div>
+            <h3 data-i18n="pdfDropText">PDF Dosyanızı Buraya Sürükleyin</h3>
+            <p data-i18n="pdfDropDescription">veya dosya seçmek için butona tıklayın</p>
+            <button class="btn btn-primary" id="pdfBrowseBtn">
+              <i class="fas fa-folder-open"></i>
+              <span data-i18n="pdfBrowseButton">PDF Dosyası Seç</span>
+            </button>
+            <input type="file" id="pdfFileInput" accept="application/pdf,.pdf">
+          </div>
+          
+          <div class="btn-group">
+            <button class="btn btn-primary" id="convertToBase64Btn">
+              <i class="fas fa-code"></i>
+              <span data-i18n="convertToBase64Button">Base64'e Dönüştür</span>
+            </button>
+          </div>
+          
+          <div class="base64-result" id="base64Result">
+            <h3 data-i18n="base64ResultTitle">Base64 Çıktısı</h3>
+            <div class="base64-output">
+              <button class="copy-btn" id="copyBase64Btn">
+                <i class="fas fa-copy"></i> <span data-i18n="copyButton">Kopyala</span>
+              </button>
+              <pre id="base64Output"></pre>
+            </div>
+          </div>
         </div>
         
         <div class="status-container">
